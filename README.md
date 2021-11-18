@@ -4,9 +4,12 @@ This template will get you set up using ROS 2 with VS Code as your IDE.
 
 It's a reduced version of [athackst/vscode_ros2_workspace](https://github.com/athackst/vscode_ros2_workspace).
 
-**CURRENTLY SUPPORTED ROS 2 VERSION:** ROS 2 Galactic Geochelone
+**CURRENTLY SUPPORTED ROS 2 VERSIONS:**
 
-**CURRENTLY SUPPORTED OS:** Ubuntu Linux 20.04
+- ROS 2 Galactic Geochelone on branch `galactic`
+- ROS 2 Foxy Fitzroy on branch `foxy`
+
+**CURRENTLY SUPPORTED OS:** Ubuntu 20.04
 
 ## Features
 
@@ -28,4 +31,4 @@ There are many pre-defined tasks, see [`.vscode/tasks.json`](.vscode/tasks.json)
 
 ### Workspace organization
 
-`.gitignore` ignores everything but the source code root directory by default.
+`.gitignore` ignores everything but the source code root directory by default. A second one is present in `src/`, ready to be populated if need be.
