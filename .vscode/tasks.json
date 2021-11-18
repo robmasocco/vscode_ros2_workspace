@@ -1,6 +1,4 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         // Build tasks
@@ -8,7 +6,7 @@
             "label": "build",
             "detail": "Build workspace (default)",
             "type": "shell",
-            "command": "colcon build --merge-install --symlink-install --cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' -Wall -Wextra -Wpedantic",
+            "command": "colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -16,24 +14,29 @@
             "problemMatcher": "$gcc"
         },
         {
-            "label": "debug",
+            "label": "build-debug",
             "detail": "Build workspace (debug)",
             "type": "shell",
-            "command": "colcon build --merge-install --symlink-install  --cmake-args '-DCMAKE_BUILD_TYPE=Debug' -Wall -Wextra -Wpedantic",
+            "command": "colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
             "group": "build",
             "problemMatcher": "$gcc"
         },
-        // Test tasks
         {
-            "label": "test",
-            "detail": "Run all unit tests and show results.",
+            "label": "build-selected",
+            "detail": "Build selected packages",
             "type": "shell",
-            "command": "colcon test --merge-install --symlink-install; colcon test-result",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
+            "command": "colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
+            "group": "build",
+            "problemMatcher": "$gcc"
         },
+        {
+            "label": "build-selected-debug",
+            "detail": "Build selected packages (debug)",
+            "type": "shell",
+            "command": "colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
+            "group": "build",
+            "problemMatcher": "$gcc"
+        }
         // Clean
         {
             "label": "clean",
@@ -44,22 +47,22 @@
         },
         {
             "label": "purge",
-            "detail": "Purge workspace by deleting all generated files.",
+            "detail": "Purge workspace by deleting all generated files",
             "type": "shell",
-            "command": "rm -fr build install log; py3clean .",
+            "command": "rm -rf build install log; py3clean .",
             "problemMatcher": []
         },
         // Linting and static code analysis tasks
         {
             "label": "fix",
-            "detail": "Reformat files with uncrustify.",
+            "detail": "Reformat files with uncrustify",
             "type": "shell",
             "command": "ament_uncrustify --reformat src/",
             "problemMatcher": []
         },
         {
             "label": "uncrustify",
-            "detail": "Lint files with uncrustify.",
+            "detail": "Lint files with uncrustify",
             "type": "shell",
             "command": "ament_uncrustify src/",
             "presentation": {
@@ -73,7 +76,7 @@
                     "source": " uncrustify",
                     "fileLocation": "relative",
                     "pattern": [
-                    /// just the file name message
+                    // just the file name message
                         {
                             "regexp": "^(.*)'(.*)':",
                             "kind": "file",
@@ -86,7 +89,7 @@
         },
         {
             "label": "cpplint",
-            "detail": "Lint files with cpplint.",
+            "detail": "Lint files with cpplint",
             "type": "shell",
             "command": "ament_cpplint src/",
             "presentation": {
@@ -113,7 +116,7 @@
         },
         {
             "label": "cppcheck",
-            "detail": "Run static code checker cppcheck.",
+            "detail": "Run static code checker cppcheck",
             "type": "shell",
             "command": "ament_cppcheck src/",
             "presentation": {
@@ -138,7 +141,7 @@
         },
         {
             "label": "lint_cmake",
-            "detail": "Run lint on cmake files.",
+            "detail": "Run lint on cmake files",
             "type": "shell",
             "command": "ament_lint_cmake src/",
             "presentation": {
@@ -163,7 +166,7 @@
         },
         {
             "label": "flake8",
-            "detail": "Run flake8 on python files.",
+            "detail": "Run flake8 on python files",
             "type": "shell",
             "command": "ament_flake8 src/",
             "presentation": {
@@ -190,7 +193,7 @@
         },
         {
             "label": "pep257",
-            "detail": "Run pep257 on python files.",
+            "detail": "Run pep257 on python files",
             "type": "shell",
             "command": "ament_pep257 src/",
             "presentation": {
@@ -216,7 +219,7 @@
         },
         {
             "label": "xmllint",
-            "detail": "Run xmllint on xml files.",
+            "detail": "Run xmllint on xml files",
             "type": "shell",
             "command": "ament_xmllint src/",
             "presentation": {
@@ -243,42 +246,28 @@
         },
         {
             "label": "lint all",
-            "detail": "Run all linters.",
+            "detail": "Run all linters",
             "dependsOn":["cppcheck", "cpplint", "flake8", "lint_cmake", "pep257","xmllint", "uncrustify"],
             "problemMatcher": []
         },
         // Workspace editing tasks
         {
-            "label": "new ament_cmake package",
-            "detail": "Create a new ROS cpp package from a template.",
+            "label": "new cpp package",
+            "detail": "Create a new ROS C++ package from a template",
             "type": "shell",
-            "command": "ros2 pkg create --destination-directory src --build-type ament_cmake ${input:package}",
+            "command": "ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
             "problemMatcher": []
         },
         {
-            "label": "new ament_python package",
-            "detail": "Create a new ROS python package from a template.",
+            "label": "new python package",
+            "detail": "Create a new ROS Python package from a template",
             "type": "shell",
-            "command": "ros2 pkg create --destination-directory src --build-type ament_python ${input:package}",
-            "problemMatcher": []
-        },
-        {
-            "label": "import from workspace file",
-            "detail": "Use vcs to import modules specified by a workspace/rosinstall file.",
-            "type": "shell",
-            "command": "vcs import < src/ros2.repos src",
-            "problemMatcher": []
-        },
-        {
-            "label": "update workspace file",
-            "detail": "Use vcs to update repositories in src to workspace file.",
-            "type": "shell",
-            "command": "vcs export src > src/ros2.repos",
+            "command": "ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_python --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
             "problemMatcher": []
         },
         {
             "label": "install dependencies",
-            "detail": "Install all dependencies specified in the workspaces package.xml files.",
+            "detail": "Install all dependencies specified in the workspaces package.xml files",
             "type": "shell",
             "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
             "problemMatcher": []
@@ -289,6 +278,41 @@
           "id": "package",
           "type": "promptString",
           "description": "Package name"
+        }
+        {
+          "id": "description",
+          "type": "promptString",
+          "description": "Package description"
+        }
+        {
+          "id": "license",
+          "type": "promptString",
+          "description": "Package license name and version"
+        }
+        {
+          "id": "dependencies",
+          "type": "promptString",
+          "description": "Package dependencies"
+        }
+        {
+          "id": "maintainerEmail",
+          "type": "promptString",
+          "description": "Package maintainer email address"
+        }
+        {
+          "id": "maintainerName",
+          "type": "promptString",
+          "description": "Package maintainer name"
+        }
+        {
+          "id": "nodeName",
+          "type": "promptString",
+          "description": "Main package node name (if any)"
+        }
+        {
+          "id": "selectedPackages",
+          "type": "promptString",
+          "description": "Packages to build"
         }
       ]
 }
