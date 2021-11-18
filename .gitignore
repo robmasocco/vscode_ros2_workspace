@@ -2,3 +2,6 @@
 build/*
 install/*
 log/*
+
+# Uncomment the following to avoid pushing personal configurations
+# .vscode/

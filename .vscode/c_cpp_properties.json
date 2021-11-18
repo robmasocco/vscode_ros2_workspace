@@ -3,15 +3,18 @@
         {
             "name": "Linux",
             "includePath": [
+                "${default}",
                 "${workspaceFolder}/**",
-                "/opt/ros/galactic/include/**"
+                "/opt/ros/galactic/include/**",
+                "${workspaceFolder}/install/**",
+                "/usr/local/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/g++",
             "compileCommands": "${workspaceFolder}/build/compile_commands.json",
             "cStandard": "c99",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "clang-x64"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4
