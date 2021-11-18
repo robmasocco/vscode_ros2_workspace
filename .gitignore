@@ -1,4 +1,4 @@
+# ROS 2 workspace folders
 build/*
 install/*
 log/*
-site/*
