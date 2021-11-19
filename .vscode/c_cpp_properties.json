@@ -11,7 +11,6 @@
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-x64"
