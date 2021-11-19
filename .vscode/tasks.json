@@ -36,7 +36,7 @@
             "command": "colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
             "group": "build",
             "problemMatcher": "$gcc"
-        }
+        },
         // Clean
         {
             "label": "clean",
@@ -278,37 +278,37 @@
           "id": "package",
           "type": "promptString",
           "description": "Package name"
-        }
+        },
         {
           "id": "description",
           "type": "promptString",
           "description": "Package description"
-        }
+        },
         {
           "id": "license",
           "type": "promptString",
           "description": "Package license name and version"
-        }
+        },
         {
           "id": "dependencies",
           "type": "promptString",
           "description": "Package dependencies"
-        }
+        },
         {
           "id": "maintainerEmail",
           "type": "promptString",
           "description": "Package maintainer email address"
-        }
+        },
         {
           "id": "maintainerName",
           "type": "promptString",
           "description": "Package maintainer name"
-        }
+        },
         {
           "id": "nodeName",
           "type": "promptString",
           "description": "Main package node name (if any)"
-        }
+        },
         {
           "id": "selectedPackages",
           "type": "promptString",
