@@ -31,4 +31,4 @@ There are many pre-defined tasks, see [`.vscode/tasks.json`](.vscode/tasks.json)
 
 ### Workspace organization
 
-`.gitignore` ignores everything but the source code root directory by default. A second one is present in `src/`, ready to be populated if need be.
+`.gitignore` ignores everything but the source code root directory by default.
