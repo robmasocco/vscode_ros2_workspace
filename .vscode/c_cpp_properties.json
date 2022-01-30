@@ -7,6 +7,8 @@
                 "${workspaceFolder}/**",
                 "/opt/ros/galactic/include/**",
                 "${workspaceFolder}/install/**",
+                // Add subdirectories of install here to include interfaces,
+                // headers, plugin base headers and everything else you need
                 "/usr/local/include"
             ],
             "defines": [],
