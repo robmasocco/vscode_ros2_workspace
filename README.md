@@ -7,7 +7,6 @@ It's a reduced version of [athackst/vscode_ros2_workspace](https://github.com/at
 **CURRENTLY SUPPORTED ROS 2 VERSIONS:**
 
 - ROS 2 Galactic Geochelone on branch `galactic`
-- ROS 2 Foxy Fitzroy on branch `foxy`
 
 **CURRENTLY SUPPORTED OS:** Ubuntu 20.04
 
